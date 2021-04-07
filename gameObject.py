@@ -303,15 +303,15 @@ def main():
 
 
         screen.blit(background_image, (0, 0))# ponerla en la ventana, en la posición x=0,y=0
-
+        # Ponemos los sprites del marcador 
+        screen.blit(p_jug, p_jug_rect)
+        screen.blit(p_cpu, p_cpu_rect)
 
         screen.blit(bola.image, bola.rect)  # dibujar la bola
         screen.blit(pala_jug.image, pala_jug.rect)  # dibujar pala del jugador
         screen.blit(pala_cpu.image, pala_cpu.rect)  # dibujar pala de la cpu
 
-        # Ponemos los sprites del marcador ¿por qué la pelota pasa por debajo?
-        screen.blit(p_jug, p_jug_rect)
-        screen.blit(p_cpu, p_cpu_rect)
+    
         pygame.display.flip()  # actualiza la pantalla para que se muestre la imagen
     return 0
 
