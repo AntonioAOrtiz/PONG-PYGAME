@@ -174,33 +174,39 @@ class Pala(pygame.sprite.Sprite):
             if keys[K_DOWN]:
                 self.rect.centery += self.speed * time
 
-    def ia(self, time, ball):
+    
         """
-        En la línea 1 vemos que recibe como siempre self y time y aparte recibe ball que es la bola, es necesario
+        En la línea 1 vemos que recibe como siempre self y aparte recibe ball que es la bola, es necesario
         pues el método necesita conocer donde está la bola.
 
-        En la línea 2 comprobamos que ball.speed[0] >= 0, es decir, que la velocidad en el eje x de la pelota sea
+        En la línea 2 definimos una velocidad menor a la de la bola para que la IA no sea invencible.
+
+        En la línea 3 comprobamos que ball.speed[0] >= 0, es decir, que la velocidad en el eje x de la pelota sea
         positiva, es decir, que la pelota se este moviendo hacia la derecha (hacia la pala de la cpu) y tambien
         comprueba que ball.rect.centerx >= WIDTH/2 es decir que el centro x de la pelota sea mayor o igual que el
         centro del tablero, es decir, que la pelota este en el campo de la cpu.
 
-        Por tanto la línea 2 es un condicional que comprueba que la pelota vaya hacia donde está la pala de la cpu y
+        Por tanto la línea 3 es un condicional que comprueba que la pelota vaya hacia donde está la pala de la cpu y
         que este en su campo, sino, que no se mueva. Esto se hace para que la CPU no sea invencible y no llegue a
         todas las pelotas.
 
-        La línea 3 comprueba si el centery de la pelota es menor que el centery de la bola, es decir si la pala está
+        La línea 4 comprueba si el centery de la pelota es menor que el centery de la bola, es decir si la pala está
         más arriba que que la pelota en cullo caso, ejecuta la línea 4 que mueve la pala de la cpu hacia abajo.
 
-        Las líneas 5 y 6 hacen lo mismo, pero a la inversa como se ve a simple vista.
+        Las líneas 6 y 7 hacen lo mismo, pero a la inversa como se ve a simple vista.
+
         :param time:
         :param ball:
         :return:
         """
+        
+    def ia(self, ball):
+        self.speed = [0, 5]
         if ball.speed[0] >= 0 and ball.rect.centerx >= WIDTH / 2:
-            if self.rect.centery < ball.rect.centery:
-                self.rect.centery += self.speed * time
             if self.rect.centery > ball.rect.centery:
-                self.rect.centery -= self.speed * time
+                self.rect.centery -= self.speed[1]
+        if self.rect.centery < ball.rect.centery:
+            self.rect.centery += self.speed[1]  
 # ---------------------------------------------------------------------
 
 # Funciones
@@ -286,7 +292,7 @@ def main():
         #actualizar también los puntos
         puntos=bola.actualizar(time, pala_jug, pala_cpu, puntos)
         pala_jug.mover(time, keys)
-        pala_cpu.ia(time, bola)
+        pala_cpu.ia(bola)
 
         # Con la función texto() poner texto es muy fácil, vamos a utilizarla para mostrar nuestras puntuaciones,
         # añadimos las siguientes líneas en el bucle del juego:
@@ -311,7 +317,7 @@ def main():
         screen.blit(pala_jug.image, pala_jug.rect)  # dibujar pala del jugador
         screen.blit(pala_cpu.image, pala_cpu.rect)  # dibujar pala de la cpu
 
-    
+        
         pygame.display.flip()  # actualiza la pantalla para que se muestre la imagen
     return 0
 
