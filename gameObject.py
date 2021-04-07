@@ -59,7 +59,7 @@ class Bola(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH // 2
         self.rect.centery = HEIGHT // 2
-        self.speed = [0.5, -0.5]
+        self.speed = [0.4, -0.4]
 
     def actualizar(self, time, pala_jug, pala_cpu, puntos):
         """[summary] La linea 1 define el método, recibe el parámetro self (como siempre) y el parámetro time que es
